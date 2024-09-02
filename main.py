@@ -26,6 +26,6 @@ async def greet(message: Message):
     if message.text.isnumeric():
         await message.reply(f'{int(message.text) + 1}')
 
-    await save_chat(message.chat)
+    # await save_chat(message.chat)
 
 bot.run()
