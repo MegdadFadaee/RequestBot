@@ -32,7 +32,10 @@ def convert_request_to_dict(input: str) -> dict:
         lines.pop(BODY_INDEX)
         body = lines[BODY_INDEX]
         lines.pop(BODY_INDEX)
-        output['body'] = html_query_to_dict(body)
+        if method == GET:
+        	output['body'] = html_query_to_dict(body)
+        else:
+        	output['body'] = json.loads(body)
 
     if RESPONSE in lines:
         RESPONSE_INDEX = lines.index(RESPONSE)
