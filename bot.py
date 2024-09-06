@@ -25,7 +25,7 @@ async def greet(message: Message):
         request_dict: dict = convert_request_to_dict(message.text)
         await message.reply(json.dumps(request_dict, ensure_ascii=False, indent=4))
     if message.text.isnumeric():
-        await message.reply(f'{int(message.text) + 1}')
+        await message.reply(f'{int(message.text) + 2}')
 
     # await save_chat(message.chat)
 
