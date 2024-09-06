@@ -8,4 +8,3 @@ RUN pip3 install Flask
 COPY . .
 
 CMD ["python3", "bot.py"]
-CMD ["python3", "app.py"]
