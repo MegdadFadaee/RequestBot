@@ -9,6 +9,13 @@ def is_request(text: str) -> bool:
     return first in [GET, POST, PUT, PATCH, DELETE]
 
 
+def find_index(array: list, needle: str) -> int:
+    for index, item in enumerate(list):
+      if needle in item:
+        return index
+    return -1
+
+
 def html_query_to_dict(query: str) -> dict:
     output = {}
     for row in query.split('&'):
@@ -27,8 +34,8 @@ def convert_request_to_dict(input: str) -> dict:
     lines.pop(ENDPOINT_INDEX)
     output['endpoint'] = {'method': method, 'url': url}
 
-    if BODY in lines:
-        BODY_INDEX = lines.index(BODY)
+    BODY_INDEX = find_index(lines, BODY)
+    if BODY_INDEX > -1:
         lines.pop(BODY_INDEX)
         body = lines[BODY_INDEX]
         lines.pop(BODY_INDEX)
@@ -37,8 +44,9 @@ def convert_request_to_dict(input: str) -> dict:
         else:
         	output['body'] = json.loads(body)
 
-    if RESPONSE in lines:
-        RESPONSE_INDEX = lines.index(RESPONSE)
+    RESPONSE_INDEX = find_index(lines, RESPONSE)
+    if RESPONSE_INDEX > -1:
+        output['status_code'] = lines[RESPONSE_INDEX].split()[-1]
         lines.pop(RESPONSE_INDEX)
         response = lines[RESPONSE_INDEX]
         lines.pop(RESPONSE_INDEX)
