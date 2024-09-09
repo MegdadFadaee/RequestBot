@@ -10,7 +10,7 @@ def is_request(text: str) -> bool:
 
 
 def find_index(array: list, needle: str) -> int:
-    for index, item in enumerate(list):
+    for index, item in enumerate(array):
       if needle in item:
         return index
     return -1
