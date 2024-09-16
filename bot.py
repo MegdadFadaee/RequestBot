@@ -24,7 +24,6 @@ async def save_chat(chat: Chat) -> None:
         chat_ids.append(chat.id)
 
 def create_readable_time(unix_time: int) -> str:
-  unix_time = int(message.text)
   date_time = datetime.fromtimestamp(unix_time, timezone.utc)
   jalali_date_time = jdatetime.fromtimestamp(unix_time)
   return f'{date_time:%Y-%m-%d %H:%M:%S}\n{jalali_date_time:%Y-%m-%d %H:%M:%S}'
