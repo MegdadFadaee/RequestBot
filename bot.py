@@ -1,5 +1,6 @@
 from datetime import datetime, timezone
 from jdatetime import datetime as jdatetime
+import time
 import json
 import os
 
@@ -20,11 +21,21 @@ async def save_chat(chat: Chat) -> None:
         await bot.send_message(DATA_CHAT_ID, f'{chat.id}')
         chat_ids.append(chat.id)
 
+def create_readable_time(unix_time: int) -> str:
+  unix_time = int(message.text)
+  date_time = datetime.fromtimestamp(unix_time, timezone.utc)
+  jalali_date_time = jdatetime.fromtimestamp(unix_time)
+  return f'{date_time:%Y-%m-%d %H:%M:%S}\n{jalali_date_time:%Y-%m-%d %H:%M:%S}'
+
 
 @bot.on_message()
 async def greet(message: Message):
     if message.text.lower() == 'ping':
         await message.reply("Pong")
+        return None
+    if message.text.lower() == 'now':
+        unix_time = time.time()
+        await message.reply(f'{unix_time}\n' + create_readable_time(unix_time))
         return None
 
     if is_request(message.text):
@@ -42,13 +53,11 @@ async def greet(message: Message):
 
     if message.text.isnumeric() and len(message.text) == 10:
         unix_time = int(message.text)
-        date_time = datetime.fromtimestamp(unix_time, timezone.utc)
-        jalali_date_time = jdatetime.fromtimestamp(unix_time)
-        await message.reply(f'{date_time:%Y-%m-%d %H:%M:%S}\n{jalali_date_time:%Y-%m-%d %H:%M:%S}')
+        await message.reply(create_readable_time(unix_time))
         return None
 
     if message.text.isnumeric():
-        await message.reply(f'{int(message.text) + 3}')
+        await message.reply(f'{int(message.text) + 4}')
         return None
 
 
