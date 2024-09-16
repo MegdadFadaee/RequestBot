@@ -10,8 +10,10 @@ from balethon.objects.message import Message
 
 from BeautifulJWT import BeautifulJWT, JWTDecodeError
 from BeautifulRequest import is_request, convert_request_to_dict
+from LiaraApi import get_projects_releases
 
 DATA_CHAT_ID = 5117523172
+CURRENT_PROJECT = os.environ.get('CURRENT_PROJECT')
 bot = Client(os.environ.get('BOT_TOKEN'))
 chat_ids = []
 
@@ -27,6 +29,8 @@ def create_readable_time(unix_time: int) -> str:
   jalali_date_time = jdatetime.fromtimestamp(unix_time)
   return f'{date_time:%Y-%m-%d %H:%M:%S}\n{jalali_date_time:%Y-%m-%d %H:%M:%S}'
 
+def is_release_command(command: str) -> bool:
+  return command.startswith('/release') and CURRENT_PACKAGE in command
 
 @bot.on_message()
 async def greet(message: Message):
@@ -59,6 +63,13 @@ async def greet(message: Message):
     if message.text.isnumeric():
         await message.reply(f'{int(message.text) + 4}')
         return None
+        
+    if is_release_command(message.text):
+        releases: dict = get_projects_releases(CURRENT_PROJECT)
+        releases['releases'] = len(releases['releases'])
+        await message.reply(json.dumps(releases, ensure_ascii=False, indent=4))
+        return None
+    
 
 
 bot.run()
