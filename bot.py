@@ -29,7 +29,7 @@ def create_readable_time(unix_time: int) -> str:
   return f'{date_time:%Y-%m-%d %H:%M:%S}\n{jalali_date_time:%Y-%m-%d %H:%M:%S}'
 
 def is_release_command(command: str) -> bool:
-  return command.startswith('/release') and CURRENT_PACKAGE in command
+  return command.startswith('/release') and CURRENT_PROJECT in command
 
 @bot.on_message()
 async def greet(message: Message):
