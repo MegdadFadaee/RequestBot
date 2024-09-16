@@ -1,4 +1,4 @@
-import requests
+import os, requests
 
 
 BASE_URL = 'https://api.iran.liara.ir'
