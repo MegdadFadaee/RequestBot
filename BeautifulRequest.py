@@ -11,8 +11,8 @@ def is_request(text: str) -> bool:
 
 def find_index(array: list, needle: str) -> int:
     for index, item in enumerate(array):
-      if needle in item:
-        return index
+        if needle in item:
+            return index
     return -1
 
 
@@ -40,9 +40,9 @@ def convert_request_to_dict(input: str) -> dict:
         body = lines[BODY_INDEX]
         lines.pop(BODY_INDEX)
         if method == GET:
-        	output['body'] = html_query_to_dict(body)
+            output['body'] = html_query_to_dict(body)
         else:
-        	output['body'] = json.loads(body)
+            output['body'] = json.loads(body)
 
     RESPONSE_INDEX = find_index(lines, RESPONSE)
     if RESPONSE_INDEX > -1:
