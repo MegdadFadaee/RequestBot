@@ -1,5 +1,6 @@
 import time
-from datetime import datetime, timezone
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 from jdatetime import datetime as jdatetime
 
@@ -8,8 +9,8 @@ class BeautifulTime:
 
     @staticmethod
     def create_readable_time(unix_time: int) -> str:
-        date_time = datetime.fromtimestamp(unix_time, timezone.utc)
-        jalali_date_time = jdatetime.fromtimestamp(unix_time)
+        date_time = datetime.fromtimestamp(unix_time, ZoneInfo('UTC'))
+        jalali_date_time = jdatetime.fromtimestamp(unix_time, ZoneInfo('Asia/Tehran'))
         return f'{date_time:%Y-%m-%d %H:%M:%S}\n{jalali_date_time:%Y-%m-%d %H:%M:%S}'
 
     @staticmethod
