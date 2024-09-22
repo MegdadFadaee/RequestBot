@@ -10,4 +10,5 @@ RUN pip3 install jwt
 
 COPY . .
 
+
 CMD ["python3", "bot.py"]
